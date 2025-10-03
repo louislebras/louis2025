@@ -1,0 +1,21 @@
+{
+  "home:title": "Principle OS™ by Louis Le Bras — Designer, Engineer & Investor",
+  "home:description": "A radically simple operating system for the web, built from first principles. Principle OS is a modular framework that allows designers and builders to create custom digital platforms with clarity, speed, and sovereignty.",
+  "home:image": "https://louislebras.com/assets/cover.png",
+  "home:author": "Louis Le Bras",
+  "home:copyright": "Copyright Louis Le Bras ©",
+
+  "title-h1": "Principle OS™, a radical OS <br> to craft everything on the web <br> with simplicity and leverage.",
+  "visit-website": "Visit website →",
+  "link-website": "https://principleos.com",
+  "download-whitepaper": "Download Whitepaper →",
+  "link-download": "https://principleos.com/assets/documents/principleos.pdf",
+  "the-company": "The OS",
+  "title-h2": "Principle OS is a radically simple operating system to build the web from first principles.",
+
+  "p1": "Principle OS was born from a simple question: why has creating for the web become so complex, slow, and dependent on opaque platforms? Today, digital frameworks are either too heavy and over-engineered, or too restrictive and controlled by centralized platforms.<br><br>I took the opposite path: Principle OS is an open-source, first-principles framework based only on HTML, CSS, JS and JSON. No lock-in, no hidden logic. Just the grammar of the web, assembled in a modular way.<br><br>With Principle OS, designers and builders can create custom websites and digital platforms in days, not months. The system is so clear and intuitive that even a 7-year-old could learn to use it, while remaining powerful enough to scale professional platforms.<br><br>It offers radical clarity and sovereignty: you own your code, your infrastructure, your design system. Fast, auditable, and future-proof, Principle OS is not just a tool — it is a way to reclaim execution and rebuild the web with transparency, speed, and leverage.",
+
+  "heritage": "Execution, Rewired",
+  "title-h3": "I burned it all, then built what matters.",
+  "p2": "For too long, creators have been forced to choose between two extremes: platforms with no control, or frameworks with excessive complexity. I built Principle OS to solve this dilemma.<br><br>I introduce a new grammar of execution: simple, universal technologies assembled in a modular system. A structure of components, layouts and templates, orchestrated by lightweight logic, with AI acting as a bridge for interaction and automation.<br><br>The result is a new way to create on the web: faster, clearer, more sovereign. Principle OS empowers designers and builders to stop being dependent on closed tools or over-engineered stacks, and to regain mastery over their digital creations.<br><br>More than a framework, Principle OS is an invitation: to reclaim autonomy, to design from first principles, and to see the web not as a constraint — but as pure leverage."
+}

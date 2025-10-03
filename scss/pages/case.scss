@@ -93,6 +93,11 @@ header .active-link * {
       flex: 0 0 auto; // largeur fixe selon la classe
     }
 
+    div {
+      background-color: #ececec;
+      height: fit-content;
+    }
+
     // Exemple : largeur paramétrable
     .w-20 {
       width: calc(20% - 2.5px);

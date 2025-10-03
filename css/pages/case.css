@@ -85,6 +85,10 @@ header .active-link * {
 .visual-case-container .flex-grid > * {
   flex: 0 0 auto;
 }
+.visual-case-container .flex-grid div {
+  background-color: #ececec;
+  height: fit-content;
+}
 .visual-case-container .flex-grid .w-20 {
   width: calc(20% - 2.5px);
 }

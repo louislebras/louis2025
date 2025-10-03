@@ -1,0 +1,39 @@
+<title>{{home:title}}</title>
+<meta name="description" content="{{home:description}}">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="{{home:title}}">
+<meta property="og:description" content="{{home:description}}">
+<meta property="og:image" content="{{home:image}}">
+<meta name="author" content="{{home:author}}">
+<meta name="copyright" content="{{home:copyright}}">
+<meta property="og:url" content="{{og:url}}">
+
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@louislebras">
+<meta name="twitter:title" content="{{home:title}}">
+<meta name="twitter:description" content="{{home:description}}">
+<meta name="twitter:image" content="{{home:image}}">
+<meta name="twitter:url" content="{{og:url}}">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "{{home:title}}",
+        "description": "{{home:description}}",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Principle OS™",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{https://principleos.com/assets/favicon.png/}}"
+            }
+        },
+        "url": "{{og:url}}"
+    }
+</script>
