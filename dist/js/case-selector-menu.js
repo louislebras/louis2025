@@ -19,14 +19,14 @@
     }
   };
 
-  const highlightNav = () => {
+  function highlightNav() {
     const nav = document.querySelector("header nav");
     if (!nav) return;
 
-    nav.querySelectorAll("a[href]").forEach((el) => {
-      el.classList.add("grey");
-      el.classList.remove("active-link");
-      el.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
+    nav.querySelectorAll("a[href]").forEach((a) => {
+      a.classList.remove("active-link");
+      a.classList.add("grey");
+      a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
     });
 
     const current = stripDistLang(window.location.pathname);
@@ -54,7 +54,7 @@
         .forEach((el) => el.classList.remove("grey"));
       active.classList.add("active-link");
     }
-  };
+  }
 
   document.addEventListener("DOMContentLoaded", highlightNav);
   window.addEventListener("popstate", highlightNav);
