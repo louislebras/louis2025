@@ -2,6 +2,11 @@ header {
   position: absolute;
 }
 
+header .active-link,
+header .active-link * {
+  color: #000 !important;
+}
+
 .container-case {
   width: 100vw;
   position: relative;
