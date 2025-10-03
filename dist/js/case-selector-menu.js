@@ -19,16 +19,20 @@
     }
   };
 
-  const highlightHeader = () => {
-    const header = document.querySelector("header");
-    if (!header) return;
+  const highlightNav = () => {
+    const nav = document.querySelector("header nav");
+    if (!nav) return;
 
-    header.querySelectorAll("*").forEach((el) => el.classList.add("grey"));
+    nav.querySelectorAll("a[href]").forEach((el) => {
+      el.classList.add("grey");
+      el.classList.remove("active-link");
+      el.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
+    });
 
     const current = stripDistLang(window.location.pathname);
     let active = null;
 
-    header.querySelectorAll("a[href]").forEach((a) => {
+    nav.querySelectorAll("a[href]").forEach((a) => {
       const href = a.getAttribute("href") || "";
       if (/^(mailto:|tel:|#)/i.test(href)) return;
 
@@ -52,15 +56,15 @@
     }
   };
 
-  document.addEventListener("DOMContentLoaded", highlightHeader);
-  window.addEventListener("popstate", highlightHeader);
+  document.addEventListener("DOMContentLoaded", highlightNav);
+  window.addEventListener("popstate", highlightNav);
 
   const patchLoadPage = () => {
     if (!window.loadPage || window.loadPage.__patched) return;
     const orig = window.loadPage;
     window.loadPage = function () {
       const r = orig.apply(this, arguments);
-      setTimeout(highlightHeader, 350);
+      setTimeout(highlightNav, 350);
       return r;
     };
     window.loadPage.__patched = true;
