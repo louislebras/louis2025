@@ -40,13 +40,13 @@
       if (match && !active) active = a;
     });
 
-    if (active) {
-      nav.querySelectorAll("a[href]").forEach((a) => {
-        a.classList.remove("active-link");
-        a.classList.add("grey");
-        a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
-      });
+    nav.querySelectorAll("a[href]").forEach((a) => {
+      a.classList.remove("active-link");
+      a.classList.add("grey");
+      a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
+    });
 
+    if (active) {
       active.classList.remove("grey");
       active
         .querySelectorAll(".grey")
