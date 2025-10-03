@@ -1,0 +1,25 @@
+.language-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.language-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.language-popup {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-top: 15px;
+}
+
+.language-popup.visible {
+  display: block;
+}
+
+.language-option {
+  cursor: pointer;
+}

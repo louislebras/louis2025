@@ -1,0 +1,132 @@
+<link rel="stylesheet" href="[ROOT]/css/pages/home.css">
+
+
+
+<main>
+    <div class="visualizer-home">
+        <img src="../../assets/media/home/Frame 7.png" alt="Frame 7">
+
+
+
+        <img src="../../assets/media/home/Frame 9.png" alt="Frame 9">
+        <img src="../../assets/media/home/Frame 8.png" alt="Frame 8">
+        <img src="../../assets/media/home/Frame 19.png" alt="Frame 19">
+        <img src="../../assets/media/home/Frame 11.png" alt="Frame 11">
+        <img src="../../assets/media/home/Frame 20.png" alt="Frame 20">
+        <!-- <img src="../../assets/media/home/Frame 15.png" alt="Frame 15">
+        <img src="../../assets/media/home/Frame 16.png" alt="Frame 16">
+        <img src="../../assets/media/home/Frame 17.png" alt="Frame 17"> -->
+        <!-- <img src="../../assets/media/home/Frame 10.png" alt="Frame 10">
+        <img src="../../assets/media/home/Frame 12.png" alt="Frame 12">
+        <img src="../../assets/media/home/Frame 13.png" alt="Frame 13"> -->
+        <!-- <img src="../../assets/media/home/Frame 14.png" alt="Frame 14"> -->
+    </div>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('.visualizer-home');
+        const medias = Array.from(container.children);
+        let index = 0;
+        let timer = null;
+        let isHolding = false;
+        let isPaused = false;
+
+        function showNext() {
+            medias.forEach(media => {
+                media.classList.remove('active');
+                if (media.tagName === 'VIDEO') {
+                    media.pause();
+                    media.currentTime = 0;
+                }
+            });
+
+            medias[index].classList.add('active');
+            if (medias[index].tagName === 'VIDEO') {
+                medias[index].play();
+            }
+
+            index = (index + 1) % medias.length;
+
+            if (!isHolding && !isPaused) {
+                timer = setTimeout(showNext, 700);
+            }
+        }
+
+        container.addEventListener('mousedown', () => {
+            isHolding = true;
+            clearTimeout(timer);
+            if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                medias[index - 1].pause();
+            }
+        });
+
+        container.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isHolding = true;
+            clearTimeout(timer);
+            if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                medias[index - 1].pause();
+            }
+        });
+
+        container.addEventListener('mouseup', () => {
+            if (isHolding) {
+                isHolding = false;
+                if (!isPaused) {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (isHolding) {
+                isHolding = false;
+                if (!isPaused) {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        container.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (isHolding) {
+                isHolding = false;
+                if (!isPaused) {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        container.addEventListener('click', () => {
+            if (!isHolding) {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    clearTimeout(timer);
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].pause();
+                    }
+                } else {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        if (medias.length > 0) {
+            showNext();
+        }
+    });
+</script>

@@ -1,0 +1,24 @@
+.image-wrapper-transparent-component {
+  width: 40vw;
+  height: 30vh;
+  max-width: 600px;
+  margin-top: 30px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999900px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #dadada72;
+  background-color: #fbfbfb;
+  justify-content: center;
+
+  img {
+    height: 52%;
+  }
+}
+@media (max-width: 850px) {
+  .image-wrapper-transparent-component {
+    width: 80%;
+    height: 26vh;
+  }
+}

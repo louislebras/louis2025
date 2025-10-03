@@ -1,0 +1,18 @@
+.main-button-grey-component {
+  a {
+    display: flex;
+    padding: 11px 16px;
+    border-radius: 12px;
+    background: #f9f9f9;
+    border: 1px solid #f9f9f9;
+    font-size: 11px;
+    transition: 0.3s ease;
+    text-align: center;
+    width: fit-content;
+    outline: none;
+
+    &:hover {
+      border: 1px solid #ececec;
+    }
+  }
+}

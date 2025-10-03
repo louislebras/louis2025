@@ -1,0 +1,15 @@
+[
+  {
+    "group": "default",
+    "components": [
+      "header",
+      "pageContent"
+    ],
+    "pages": [
+      "/information",
+      "/index",
+      "/donzelli",
+      "/404"
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+.main-button-black-component {
+  a {
+    display: flex;
+    padding: 11px 16px;
+    border-radius: 1200px;
+    background: #272727;
+    border: 1px solid #272727;
+    font-size: 11px;
+    transition: 0.3s ease;
+    color: white;
+    text-align: center;
+    width: fit-content;
+    outline: none;
+
+    &:hover {
+      background-color: #f9f9f9;
+      border: 1px solid #ececec;
+      color: black;
+    }
+  }
+}

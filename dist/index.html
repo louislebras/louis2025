@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="https://louislebras.com/assets/favicon.png/">
+    <link rel="shortcut icon" href="https://louislebras.com/assets/favicon.png/" type="image/png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/modals/allmodals.css">
+    <script type="module" src="/js/lang-redirect.js" defer=""></script>
+    <script type="module" src="/js/language-switcher.js" defer=""></script>
+    <script type="module" src="/js/router.js" defer=""></script>
+    <script type="module" src="/js/localhostlinks.js" defer=""></script>
+    <title>Donzelli® Furniture, Places &amp; Architecture and Design People</title>
+<meta name="description" content="A moving index of design and architecture.">
+
+<!-- OpenGraph -->
+<meta property="og:title" content="Donzelli® Furniture, Places &amp; Architecture and Design People">
+<meta property="og:description" content="A moving index of design and architecture.">
+<meta property="og:image" content="https://donzelliclub.com/assets/cover.png">
+<meta name="author" content="Louis Le Bras">
+<meta name="copyright" content="Copyright Louis Le Bras ©">
+<meta property="og:url" content="https://louislebras.com/">
+
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@louislebras">
+<meta name="twitter:title" content="Donzelli® Furniture, Places &amp; Architecture and Design People">
+<meta name="twitter:description" content="A moving index of design and architecture.">
+<meta name="twitter:image" content="https://donzelliclub.com/assets/cover.png">
+<meta name="twitter:url" content="https://louislebras.com/">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Donzelli® Furniture, Places & Architecture and Design People",
+        "description": "A moving index of design and architecture.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Principle OS™",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{https://principleos.com/assets/favicon.png/}}"
+            }
+        },
+        "url": "https://louislebras.com/"
+    }
+</script></head><body class="s-size inter">
+    <link rel="stylesheet" href="/css/pages/index.css">
+
+
+
+
+    <link rel="stylesheet" href="/css/frames/header.css">
+<link rel="stylesheet" href="/css/frames/language-switcher.css">
+
+
+<header>
+    <div class="infos-fixed-louis">
+        <a href="/">Louis Le Bras</a>
+        <span class="grey">Designer, Engineer &amp; Investor</span>
+        <span>Researcher in Neuropsychology <br>
+            and Monetary Systems</span>
+        <a class="grey" href="/information">
+            Information
+        </a>
+    </div>
+    <nav>
+        <ul>
+            <li><a class="grey-hover" href="/principleos"><span class="grey">01</span> Principle OS™</a></li>
+            <li><a class="grey-hover" href="/donzelli"><span class="grey">02</span> Donzelli®</a></li>
+            <li><a class="grey-hover" href="/the-way-of-leverage"> <span class="grey">03</span> The Way of
+                    Leverage <span class="grey">(coming)</span></a></li>
+            <li> <span class="grey"> <span class="grey">04</span> Bitcoin Family Office (soon)</span> </li>
+            <li><a class="grey" href="/archives">→ Archives</a></li>
+        </ul>
+    </nav>
+
+    <div class="others-infos-louislebras">
+        <a target="_blank" href="mailto:louis@donzelliclub.com" class="grey">E-mail</a>
+        <div class="language-menu">
+            <button class="language-button">
+                <span class="current-language grey">Language</span>
+            </button>
+            <div class="language-popup">
+                <div class="language-option" data-lang="">English</div>
+                <div class="language-option" data-lang="fr">Français</div>
+            </div>
+        </div>
+    </div>
+
+
+</header>
+<div id="pageContent"><link rel="stylesheet" href="/css/pages/home.css">
+
+
+
+<main>
+    <div class="visualizer-home">
+        <img src="../../assets/media/home/Frame 7.png" alt="Frame 7">
+
+
+
+        <img src="../../assets/media/home/Frame 9.png" alt="Frame 9">
+        <img src="../../assets/media/home/Frame 8.png" alt="Frame 8">
+        <img src="../../assets/media/home/Frame 19.png" alt="Frame 19">
+        <img src="../../assets/media/home/Frame 11.png" alt="Frame 11">
+        <img src="../../assets/media/home/Frame 20.png" alt="Frame 20">
+        <!-- <img src="../../assets/media/home/Frame 15.png" alt="Frame 15">
+        <img src="../../assets/media/home/Frame 16.png" alt="Frame 16">
+        <img src="../../assets/media/home/Frame 17.png" alt="Frame 17"> -->
+        <!-- <img src="../../assets/media/home/Frame 10.png" alt="Frame 10">
+        <img src="../../assets/media/home/Frame 12.png" alt="Frame 12">
+        <img src="../../assets/media/home/Frame 13.png" alt="Frame 13"> -->
+        <!-- <img src="../../assets/media/home/Frame 14.png" alt="Frame 14"> -->
+    </div>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('.visualizer-home');
+        const medias = Array.from(container.children);
+        let index = 0;
+        let timer = null;
+        let isHolding = false;
+        let isPaused = false;
+
+        function showNext() {
+            medias.forEach(media => {
+                media.classList.remove('active');
+                if (media.tagName === 'VIDEO') {
+                    media.pause();
+                    media.currentTime = 0;
+                }
+            });
+
+            medias[index].classList.add('active');
+            if (medias[index].tagName === 'VIDEO') {
+                medias[index].play();
+            }
+
+            index = (index + 1) % medias.length;
+
+            if (!isHolding && !isPaused) {
+                timer = setTimeout(showNext, 700);
+            }
+        }
+
+        container.addEventListener('mousedown', () => {
+            isHolding = true;
+            clearTimeout(timer);
+            if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                medias[index - 1].pause();
+            }
+        });
+
+        container.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isHolding = true;
+            clearTimeout(timer);
+            if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                medias[index - 1].pause();
+            }
+        });
+
+        container.addEventListener('mouseup', () => {
+            if (isHolding) {
+                isHolding = false;
+                if (!isPaused) {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (isHolding) {
+                isHolding = false;
+                if (!isPaused) {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        container.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (isHolding) {
+                isHolding = false;
+                if (!isPaused) {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        container.addEventListener('click', () => {
+            if (!isHolding) {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    clearTimeout(timer);
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].pause();
+                    }
+                } else {
+                    if (medias[index - 1] && medias[index - 1].tagName === 'VIDEO') {
+                        medias[index - 1].play();
+                    }
+                    timer = setTimeout(showNext, 700);
+                }
+            }
+        });
+
+        if (medias.length > 0) {
+            showNext();
+        }
+    });
+</script></div>
+    <div id="modals-root"></div>
+    <script>window.__DEFAULT_LANG__ = "en";</script>
+    <script src="js/modal-config.js" defer=""></script>
+    <script src="js/modal-manager.js" defer=""></script>
+
+</body></html>

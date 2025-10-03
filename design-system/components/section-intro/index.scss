@@ -1,0 +1,43 @@
+.section-intro-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  h2 {
+    line-height: 120%;
+  }
+
+  p {
+    margin-top: 10px;
+    text-align: center;
+    line-height: 150%;
+  }
+  .container-ctas-section-intro {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .btn-rounded {
+    background-color: #f7f6f6;
+    padding: 7px 12px;
+    border-radius: 1000px;
+    border: 1px solid #f7f6f6;
+    transition: 0.3s ease;
+    &:hover {
+      background-color: white;
+      border: 1px solid #e7e7e7;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .section-intro-component {
+    width: 90%;
+    p {
+      max-width: 100%;
+    }
+  }
+}

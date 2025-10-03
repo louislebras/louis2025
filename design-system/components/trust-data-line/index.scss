@@ -1,0 +1,16 @@
+.trust-data-line-component {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  position: relative;
+  left: -10px;
+  img {
+    width: 10px;
+  }
+}
+
+@media (max-width: 850px) {
+  .trust-data-line-component {
+    left: 0;
+  }
+}

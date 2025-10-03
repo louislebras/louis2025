@@ -1,0 +1,40 @@
+header {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
+header nav {
+  margin-top: 50px;
+}
+header nav ul {
+  display: flex;
+  flex-direction: column;
+}
+header nav ul li,
+header nav ul a {
+  line-height: 130% !important;
+}
+
+@media (max-width: 850px) {
+  header {
+    position: absolute;
+  }
+}
+.infos-fixed-louis {
+  display: flex;
+  flex-direction: column;
+}
+.infos-fixed-louis a,
+.infos-fixed-louis span {
+  width: fit-content;
+}
+
+.others-infos-louislebras {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

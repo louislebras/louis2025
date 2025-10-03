@@ -1,0 +1,17 @@
+// 🎨 Palette base
+// Neutral Colors
+$color-neutral-100: #f3f3f3;
+$color-neutral-200: #ececec;
+$color-neutral-300: #e6e6e6;
+$color-neutral-700: #7e7e7e;
+$color-black: #000000;
+
+// 🧩 Tokens d’usage
+
+$background-primary: $color-neutral-100;
+$background-secondary: $color-neutral-200;
+
+$border-color-primary: $color-neutral-300;
+
+$text-primary: $color-black;
+$text-secondary: $color-neutral-700;

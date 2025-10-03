@@ -1,0 +1,22 @@
+.feature-block-content-only-component {
+  width: 35vw;
+  max-width: 450px;
+  border-radius: 20px;
+  background: #f7f6f6;
+  padding: 21px 20px 20px;
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  p {
+    width: fit-content;
+    line-height: 140%;
+  }
+}
+
+@media (max-width: 850px) {
+  .feature-block-content-only-component {
+    width: 90%;
+  }
+}
