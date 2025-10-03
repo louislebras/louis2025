@@ -40,19 +40,21 @@
       if (match && !active) active = a;
     });
 
-    nav.querySelectorAll("a[href]").forEach((a) => {
-      a.classList.remove("active-link");
-      a.classList.add("grey");
-      a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
-    });
-
+    // ⚡ Seulement si un lien correspond : on fait le reset + activation
     if (active) {
+      nav.querySelectorAll("a[href]").forEach((a) => {
+        a.classList.remove("active-link");
+        a.classList.add("grey");
+        a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
+      });
+
       active.classList.remove("grey");
       active
         .querySelectorAll(".grey")
         .forEach((el) => el.classList.remove("grey"));
       active.classList.add("active-link");
     }
+    // ⚡ Sinon : on ne touche à rien (le nav reste tel qu’en HTML)
   }
 
   document.addEventListener("DOMContentLoaded", highlightNav);
