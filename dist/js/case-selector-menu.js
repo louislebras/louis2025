@@ -23,19 +23,12 @@
     const nav = document.querySelector("header nav");
     if (!nav) return;
 
-    nav.querySelectorAll("a[href]").forEach((a) => {
-      a.classList.remove("active-link");
-      a.classList.add("grey");
-      a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
-    });
-
     const current = stripDistLang(window.location.pathname);
     let active = null;
 
     nav.querySelectorAll("a[href]").forEach((a) => {
       const href = a.getAttribute("href") || "";
       if (/^(mailto:|tel:|#)/i.test(href)) return;
-
       const linkPath = hrefToPath(href);
       if (!linkPath) return;
 
@@ -48,6 +41,12 @@
     });
 
     if (active) {
+      nav.querySelectorAll("a[href]").forEach((a) => {
+        a.classList.remove("active-link");
+        a.classList.add("grey");
+        a.querySelectorAll("*").forEach((s) => s.classList.add("grey"));
+      });
+
       active.classList.remove("grey");
       active
         .querySelectorAll(".grey")
@@ -64,13 +63,10 @@
     const orig = window.loadPage;
     window.loadPage = function () {
       const r = orig.apply(this, arguments);
-      setTimeout(highlightNav, 350);
+      setTimeout(highlightNav, 50);
       return r;
     };
     window.loadPage.__patched = true;
   };
-
   patchLoadPage();
-  const mo = new MutationObserver(patchLoadPage);
-  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
