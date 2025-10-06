@@ -83,6 +83,14 @@ a {
   color: #7e7e7e !important;
 }
 
+.semi-grey {
+  color: #5a5a5a;
+}
+
+.dark-grey {
+  color: #464646;
+}
+
 .grey-hover {
   color: #000000;
   transition: 0.3s ease;
