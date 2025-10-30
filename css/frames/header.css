@@ -7,7 +7,7 @@ header {
   z-index: 1000;
 }
 header nav {
-  margin-top: 50px;
+  margin-top: 40px;
 }
 header nav ul {
   display: flex;
