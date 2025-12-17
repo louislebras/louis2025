@@ -1,187 +1,74 @@
 import { GOOGLE_ANALYTICS_ID } from "../config/analytics.js";
 
 const availableLanguages = ["en"];
+const forceFullReloadFor = ["/archives"];
+const routerCache = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const forceFullReloadFor = ["/archives", "/about"];
-  const routerCache = {};
   const contentContainer = document.querySelector("#pageContent");
-
   if (!contentContainer) return;
 
+  // === CRÉATION DU VOILE DE TRANSITION ===
+  const overlay = document.createElement("div");
+  overlay.id = "pageTransitionOverlay";
+  overlay.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  `;
+
+  // Wrapper pour position relative
+  const wrapper = document.createElement("div");
+  wrapper.style.position = "relative";
+  contentContainer.parentNode.insertBefore(wrapper, contentContainer);
+  wrapper.appendChild(contentContainer);
+  wrapper.appendChild(overlay);
+
+  // === SAUVEGARDE DES LIENS HORS #pageContent (UNIQUEMENT <a>) ===
+  const staticLinks = [];
+  document.querySelectorAll("a:not(#pageContent a)").forEach((a) => {
+    const href = a.getAttribute("href");
+    if (href && !href.startsWith("http") && !href.startsWith("#")) {
+      const absolute = new URL(href, window.location.origin).pathname;
+      staticLinks.push({ el: a, baseHref: absolute });
+    }
+  });
+
+  // === LAYOUT MAP ===
   let layoutMap = [];
   try {
     const resp = await fetch("/layout-map.json");
     layoutMap = await resp.json();
-  } catch (err) {
-    return;
+  } catch {
+    console.warn("[Router] layout-map.json introuvable.");
   }
 
+  // === UTILITAIRES ===
   function normalizePath(url) {
     const tmp = new URL(url, window.location.origin);
-    let path = tmp.pathname;
-
-    path = path.replace(/\/{2,}/g, "/");
-
-    if (path === "" || path === "/") {
-      return `/${availableLanguages[0]}/index`;
-    }
-    if (path.endsWith("/")) {
-      path = path.slice(0, -1);
-    }
-
+    let path = tmp.pathname.replace(/\/{2,}/g, "/");
+    if (path.endsWith("/")) path = path.slice(0, -1);
+    if (!path) path = "/";
     return path;
   }
 
   function getGroupForPath(normPath) {
     for (const entry of layoutMap) {
-      if (
-        entry.pages.some(
-          (page) =>
-            normPath === page || normPath === `/${availableLanguages[0]}${page}`
-        )
-      ) {
-        return entry.group;
-      }
+      if (entry.pages.some((page) => normPath === page)) return entry.group;
     }
     return "default";
   }
 
-  const activeTimeouts = new Set();
-  const activeIntervals = new Set();
-  const trackedEventListeners = [];
-
-  function clearAllTimeoutsAndIntervals() {
-    activeTimeouts.forEach(clearTimeout);
-    activeIntervals.forEach(clearInterval);
-    activeTimeouts.clear();
-    activeIntervals.clear();
-  }
-
-  function trackTimeout(callback, delay) {
-    const id = setTimeout(() => {
-      activeTimeouts.delete(id);
-      callback();
-    }, delay);
-    activeTimeouts.add(id);
-    return id;
-  }
-
-  function trackInterval(callback, interval) {
-    const id = setInterval(callback, interval);
-    activeIntervals.add(id);
-    return id;
-  }
-
-  const originalAddEventListener = EventTarget.prototype.addEventListener;
-
-  EventTarget.prototype.addEventListener = function (type, listener, options) {
-    if (
-      this instanceof Node &&
-      document.querySelector("#pageContent")?.contains(this)
-    ) {
-      trackedEventListeners.push({ target: this, type, listener, options });
-    }
-    originalAddEventListener.call(this, type, listener, options);
-  };
-
-  function removeTrackedEventListeners() {
-    trackedEventListeners.forEach(({ target, type, listener, options }) => {
-      if (target && target.removeEventListener) {
-        target.removeEventListener(type, listener, options);
-      }
-    });
-    trackedEventListeners.length = 0;
-  }
-
-  function cleanPreviousScripts() {
-    document.querySelectorAll("#pageContent script").forEach((script) => {
-      script.remove();
-    });
-  }
-
-  function removeAllPrevious() {
-    document.querySelectorAll("#pageContent script").forEach((script) => {
-      script.remove();
-    });
-
-    let highestTimeout = setTimeout(() => {});
-    let highestInterval = setInterval(() => {});
-    for (let i = 0; i < highestTimeout; i++) clearTimeout(i);
-    for (let i = 0; i < highestInterval; i++) clearInterval(i);
-
-    clearAllTimeoutsAndIntervals();
-    removeTrackedEventListeners();
-    cleanPreviousScripts();
-  }
-
-  function executeScripts() {
-    const scripts = document.querySelectorAll("#pageContent script");
-    const scriptList = [];
-
-    scripts.forEach((oldScript) => {
-      const newScript = document.createElement("script");
-      if (oldScript.src) {
-        newScript.src = oldScript.src;
-        newScript.async = true;
-        scriptList.push(newScript.src);
-      } else {
-        newScript.textContent = oldScript.textContent;
-        scriptList.push("[INLINE SCRIPT]");
-      }
-      oldScript.replaceWith(newScript);
-    });
-
-    trackTimeout(() => {
-      document.dispatchEvent(new Event("DOMContentLoaded"));
-    }, 300);
-  }
-
-  function updateMetaAndTitle(newDoc) {
-    const newTitle = newDoc.querySelector("title");
-    if (newTitle) {
-      document.title = newTitle.textContent;
-    }
-
-    const currentMetas = Array.from(document.head.querySelectorAll("meta"));
-    const newMetas = Array.from(newDoc.querySelectorAll("meta"));
-
-    const metaMap = new Map(
-      newMetas.map((meta) => [
-        meta.getAttribute("name") || meta.getAttribute("property"),
-        meta,
-      ])
-    );
-
-    currentMetas.forEach((meta) => {
-      const name = meta.getAttribute("name") || meta.getAttribute("property");
-      if (name && !metaMap.has(name)) {
-        meta.remove();
-      }
-    });
-
-    newMetas.forEach((newMeta) => {
-      const name =
-        newMeta.getAttribute("name") || newMeta.getAttribute("property");
-      if (!name) return;
-
-      const existingMeta = document.head.querySelector(
-        `meta[name="${name}"], meta[property="${name}"]`
-      );
-      if (existingMeta) {
-        if (existingMeta.content !== newMeta.content) {
-          existingMeta.content = newMeta.content;
-        }
-      } else {
-        document.head.appendChild(newMeta.cloneNode(true));
-      }
-    });
-  }
-
+  // Ajoute /dist uniquement en local
   function addDistIfLocal(url) {
-    const isLocal = location.hostname === "localhost";
-    if (!isLocal) return url;
-
+    if (location.hostname !== "localhost") return url;
     try {
       const parsed = new URL(url, window.location.origin);
       if (!parsed.pathname.startsWith("/dist/")) {
@@ -193,154 +80,254 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  const pageOrder = ["/index", "/start", "/leverage", "/introduction"];
-
-  function updateNavButtons(currentPath, doc = document) {
-    const prevBtn = document.querySelector("#nav-buttons .prev-btn");
-    const nextBtn = document.querySelector("#nav-buttons .next-btn");
-    const langRegex = /^\/([a-z]{2})(\/|$)/;
-    const langMatch = currentPath.match(langRegex);
-    const lang = langMatch ? langMatch[1] : availableLanguages[0];
-    const basePath =
-      currentPath.replace(langRegex, "/").replace(/\/$/, "") || "/index";
-    const currentIndex = pageOrder.indexOf(basePath);
-
-    const pathToUrl = (path) =>
-      path === "/index" ? `/${lang}/` : `/${lang}${path}`;
-
-    if (prevBtn) {
-      if (currentIndex > 0) {
-        prevBtn.setAttribute("href", pathToUrl(pageOrder[currentIndex - 1]));
-      } else {
-        prevBtn.removeAttribute("href");
-      }
-    }
-
-    if (nextBtn) {
-      const nextIndex =
-        currentIndex < pageOrder.length - 1 ? currentIndex + 1 : 0;
-      nextBtn.setAttribute("href", pathToUrl(pageOrder[nextIndex]));
-    }
-
-    if (prevBtn) {
-      const label = doc
-        .querySelector("[data-prev-label]")
-        ?.getAttribute("data-prev-label");
-      prevBtn.textContent = label || "Back";
-    }
-    if (nextBtn) {
-      const label = doc
-        .querySelector("[data-next-label]")
-        ?.getAttribute("data-next-label");
-      nextBtn.textContent = label || "Next";
-    }
+  // Langue courante à partir de l'URL
+  function getCurrentLang() {
+    const match = window.location.pathname.match(/^\/([a-z]{2})(\/|$)/);
+    return match ? match[1] : "en";
   }
 
+  function resolveHref(href) {
+    if (href.startsWith("http") || href.startsWith("#")) return href;
+
+    href = href.replace(/\/+\.\.\/+/g, "/").replace(/\/{2,}/g, "/");
+
+    const currentLang = getCurrentLang();
+
+    // === 1) Cas où le lien contient déjà un slug explicite → on le respecte ===
+    if (/^\/[a-z]{2}(\/|$)/.test(href)) {
+      return href.replace(/\/{2,}/g, "/");
+    }
+
+    // === 2) Cas d'un lien racine ===
+    if (!href || href === "/" || href === "/.." || href === "../") {
+      return currentLang === "en" ? "/" : `/${currentLang}/`;
+    }
+
+    // === 3) Autres liens internes ===
+    if (!/^\/[a-z]{2}\//.test(href) && currentLang !== "en") {
+      href = `/${currentLang}${href.startsWith("/") ? href : "/" + href}`;
+    }
+
+    return href.replace(/\/{2,}/g, "/");
+  }
+
+  // Ré-applique le slug langue aux <a> statiques hors #pageContent
+  function restoreStaticLinks() {
+    const lang = getCurrentLang();
+    const langPrefix = lang !== "en" ? `/${lang}` : "";
+    staticLinks.forEach(({ el, baseHref }) => {
+      const alreadyPrefixed =
+        baseHref.startsWith(`/${lang}/`) || baseHref === `/${lang}`;
+      const finalHref = alreadyPrefixed
+        ? baseHref
+        : `${langPrefix}${baseHref}`.replace(/\/{2,}/g, "/");
+      el.setAttribute("href", finalHref);
+    });
+  }
+
+  // === TITLE + META UNIQUEMENT (AUCUN TOUCHER AUX <link>) ===
+  function updateMetaAndTitle(newDoc) {
+    const newTitle = newDoc.querySelector("title");
+    if (newTitle) document.title = newTitle.textContent;
+
+    const oldMetas = Array.from(document.head.querySelectorAll("meta"));
+    const newMetas = Array.from(newDoc.querySelectorAll("meta"));
+
+    const newMetaMap = new Map(
+      newMetas.map((m) => [
+        m.getAttribute("name") || m.getAttribute("property"),
+        m,
+      ])
+    );
+
+    // remove metas qui n'existent plus
+    oldMetas.forEach((m) => {
+      const key = m.getAttribute("name") || m.getAttribute("property");
+      if (key && !newMetaMap.has(key)) m.remove();
+    });
+
+    // upsert metas
+    newMetas.forEach((m) => {
+      const key = m.getAttribute("name") || m.getAttribute("property");
+      if (!key) return;
+      const existing = document.head.querySelector(
+        `meta[name="${key}"], meta[property="${key}"]`
+      );
+      if (existing) existing.content = m.content;
+      else document.head.appendChild(m.cloneNode(true));
+    });
+  }
+
+  // === NETTOYAGE ===
+  const activeTimeouts = new Set();
+  const activeIntervals = new Set();
+  const trackedListeners = [];
+
+  const originalAddEventListener = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, listener, options) {
+    if (
+      this instanceof Node &&
+      document.querySelector("#pageContent")?.contains(this)
+    ) {
+      trackedListeners.push({ target: this, type, listener, options });
+    }
+    originalAddEventListener.call(this, type, listener, options);
+  };
+
+  function clearAllTimeoutsAndIntervals() {
+    activeTimeouts.forEach(clearTimeout);
+    activeIntervals.forEach(clearInterval);
+    activeTimeouts.clear();
+    activeIntervals.clear();
+  }
+
+  function removeTrackedListeners() {
+    trackedListeners.forEach(({ target, type, listener, options }) => {
+      if (target && target.removeEventListener)
+        target.removeEventListener(type, listener, options);
+    });
+    trackedListeners.length = 0;
+  }
+
+  function cleanupPreviousPage() {
+    contentContainer.querySelectorAll("script").forEach((s) => s.remove());
+    clearAllTimeoutsAndIntervals();
+    removeTrackedListeners();
+  }
+
+  // === RE-EXECUTION DES SCRIPTS DE PAGE (#pageContent) ===
+  async function executeScripts(container) {
+    const scripts = Array.from(container.querySelectorAll("script"));
+    for (const oldScript of scripts) {
+      await new Promise((resolve) => {
+        const newScript = document.createElement("script");
+        for (const attr of oldScript.attributes) {
+          newScript.setAttribute(attr.name, attr.value);
+        }
+        if (oldScript.src) {
+          newScript.src = oldScript.src + "?v=" + Date.now();
+          newScript.onload = resolve;
+          newScript.onerror = resolve;
+        } else {
+          newScript.textContent = oldScript.textContent;
+          resolve();
+        }
+        oldScript.replaceWith(newScript);
+      });
+    }
+    document.dispatchEvent(new Event("pageScriptsLoaded"));
+  }
+
+  // === CHARGEMENT DYNAMIQUE AVEC VOILE ET HAUTEUR FIGÉE ===
   async function loadPage(targetUrl, pushToHistory = true) {
     const adjustedUrl = addDistIfLocal(targetUrl);
-    const normTargetPath = normalizePath(adjustedUrl);
-    const normCurrentPath = normalizePath(window.location.pathname);
+    const normTarget = normalizePath(adjustedUrl);
+    const normCurrent = normalizePath(window.location.pathname);
+    const currentGroup = getGroupForPath(normCurrent);
+    const targetGroup = getGroupForPath(normTarget);
 
     if (
-      forceFullReloadFor.some((folder) => normTargetPath.startsWith(folder))
+      currentGroup !== targetGroup ||
+      forceFullReloadFor.some((p) => normTarget.startsWith(p))
     ) {
       window.location.href = adjustedUrl;
       return;
     }
 
-    const currentGroup = getGroupForPath(normCurrentPath);
-    const targetGroup = getGroupForPath(normTargetPath);
-
-    if (currentGroup !== targetGroup) {
-      window.location.href = adjustedUrl;
-      return;
-    }
-
-    // ➕ Empêche le layout shift
+    // === ÉTAPE 1 : FIGER LA HAUTEUR ACTUELLE ===
     const currentHeight = contentContainer.offsetHeight;
     contentContainer.style.minHeight = `${currentHeight}px`;
-    contentContainer.style.transition = "opacity 300ms ease";
-    contentContainer.style.opacity = "0";
+    contentContainer.style.maxHeight = `${currentHeight}px`;
+    contentContainer.style.overflow = "hidden";
+
+    // === ÉTAPE 2 : AFFICHER LE VOILE ===
+    overlay.style.pointerEvents = "auto";
+    overlay.style.opacity = "1";
+
+    // Attendre que le voile soit complètement opaque
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     try {
-      if (routerCache[normTargetPath]) {
-        setTimeout(() => {
-          removeAllPrevious();
-          contentContainer.innerHTML = routerCache[normTargetPath];
-          window.scrollTo(0, 0); // <=== AJOUT ICI
-          updateMetaAndTitle(document);
-          updateNavButtons(normTargetPath);
-          setTimeout(() => {
-            executeScripts();
-            contentContainer.style.opacity = "1";
-          }, 200);
-        }, 300);
+      let newContent;
 
-        if (pushToHistory)
-          history.pushState({ path: adjustedUrl }, "", adjustedUrl);
-        return;
-      }
+      // === ÉTAPE 3 : SWAP CACHÉ DERRIÈRE LE VOILE ===
+      if (routerCache[normTarget]) {
+        cleanupPreviousPage();
+        contentContainer.innerHTML = routerCache[normTarget];
+        window.scrollTo(0, 0);
+        updateMetaAndTitle(document);
+        restoreStaticLinks();
+        await executeScripts(contentContainer);
+      } else {
+        // FETCH
+        const response = await fetch(adjustedUrl);
+        if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        newContent = doc.querySelector("#pageContent");
+        if (!newContent) throw new Error("Pas de #pageContent");
 
-      const response = await fetch(adjustedUrl);
-      if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+        routerCache[normTarget] = newContent.innerHTML;
 
-      const text = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(text, "text/html");
-      const newContent = doc.querySelector("#pageContent");
-
-      if (!newContent) {
-        window.location.href = adjustedUrl;
-        return;
-      }
-
-      routerCache[normTargetPath] = newContent.innerHTML;
-
-      setTimeout(() => {
-        removeAllPrevious();
+        cleanupPreviousPage();
         contentContainer.innerHTML = newContent.innerHTML;
-        window.scrollTo(0, 0); // <=== AJOUT ICI
-        if (typeof init === "function") {
-          try {
-            init();
-          } catch (e) {
-            console.warn("Sidebar init failed:", e);
-          }
-        }
-        if (typeof activateNavFromSummary === "function") {
-          activateNavFromSummary();
-        }
+        window.scrollTo(0, 0);
+
+        updateMetaAndTitle(doc);
+        restoreStaticLinks();
+
         if (typeof gtag === "function" && GOOGLE_ANALYTICS_ID) {
           gtag("config", GOOGLE_ANALYTICS_ID, {
-            page_path: normTargetPath,
+            page_path: normTarget,
             page_title: document.title,
           });
         }
-        if (typeof window.plausible === "function") {
-          plausible("pageview");
-        }
-        updateMetaAndTitle(doc);
-        updateNavButtons(normTargetPath, doc);
-        setTimeout(() => {
-          executeScripts();
-          contentContainer.style.opacity = "1";
-          // ✅ Réinitialise après transition
-          contentContainer.style.minHeight = "";
-        }, 200);
-      }, 300);
+        if (typeof window.plausible === "function") plausible("pageview");
 
-      if (pushToHistory)
+        await executeScripts(contentContainer);
+      }
+
+      // === ÉTAPE 4 : LIBÉRER LA HAUTEUR ===
+      contentContainer.style.minHeight = "";
+      contentContainer.style.maxHeight = "";
+      contentContainer.style.overflow = "";
+
+      // === ÉTAPE 5 : RETIRER LE VOILE ===
+      overlay.style.opacity = "0";
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      overlay.style.pointerEvents = "none";
+
+      if (pushToHistory) {
         history.pushState({ path: adjustedUrl }, "", adjustedUrl);
+      }
     } catch (err) {
+      console.error("[Router] Erreur :", err);
+      // En cas d'erreur, libérer la hauteur et retirer le voile
+      contentContainer.style.minHeight = "";
+      contentContainer.style.maxHeight = "";
+      contentContainer.style.overflow = "";
+      overlay.style.opacity = "0";
+      overlay.style.pointerEvents = "none";
       window.location.href = adjustedUrl;
     }
   }
 
+  // === INTERCEPTION DES <a> ===
   document.addEventListener("click", (e) => {
+    // 🚫 1. Ne jamais intercepter le changement de langue (no-spa)
+    if (e.target.closest(".no-spa")) {
+      return;
+    }
+
+    // 2. Interception standard des <a>
     const link = e.target.closest("a");
     if (!link) return;
-    const href = link.getAttribute("href") || "";
 
+    let href = link.getAttribute("href") || "";
+    if (!href) return;
+
+    // 3. Liens externes ou ancres → laisser passer
     if (
       href.startsWith("http") ||
       href.startsWith("#") ||
@@ -349,20 +336,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    // 4. Navigation SPA classique
     e.preventDefault();
+    href = resolveHref(href);
+    if (href === window.location.pathname) return;
+
     loadPage(href);
   });
 
+  // === BOUTON RETOUR ===
   window.addEventListener("popstate", (e) => {
-    if (e.state && e.state.path) {
-      loadPage(e.state.path, false);
-    } else {
-      window.location.reload();
-    }
+    if (e.state && e.state.path) loadPage(e.state.path, false);
+    else window.location.reload();
   });
 
-  const initialPath = normalizePath(window.location.pathname);
-  updateNavButtons(initialPath);
-
-  window.loadPage = loadPage;
+  // === INIT ===
+  restoreStaticLinks();
+  document.dispatchEvent(new Event("pageScriptsLoaded"));
 });

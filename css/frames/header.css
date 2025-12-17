@@ -23,6 +23,14 @@ header nav ul a {
     position: absolute;
   }
 }
+.indic-menu {
+  margin-bottom: 5px;
+}
+
+.archives-btn {
+  margin-top: 5px;
+}
+
 .infos-fixed-louis {
   display: flex;
   flex-direction: column;

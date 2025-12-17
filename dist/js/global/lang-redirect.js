@@ -2,7 +2,7 @@ import {
   availableLanguages,
   getDefaultLanguage,
   isLanguageAvailable,
-} from "../config/config-app.js";
+} from "../../config/config-app.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const userLang = navigator.language || navigator.userLanguage;

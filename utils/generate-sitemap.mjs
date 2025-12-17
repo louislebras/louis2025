@@ -4,55 +4,50 @@ import path from "path";
 import xml from "xml";
 import { baseUrl } from "../config/config-app.js";
 
-// 📁 Dossier des pages générées
 const pagesDir = path.join(process.cwd(), "dist");
 
-// ❌ Nom du dossier à exclure (ex: "modals")
-const EXCLUDED_FOLDER = "modals";
+// ❌ Exclusion universelle : tout ce qui contient "404"
+const is404 = (relativePath) => relativePath.includes("404");
 
-// 🔁 Fonction récursive pour récupérer tous les fichiers "index.html"
+// ❌ Dossiers exclus
+const EXCLUDED_FOLDERS = ["modals"];
+
+// ✅ Date SEO propre (YYYY-MM-DD)
+const today = new Date().toISOString().split("T")[0];
+
+// ✅ Récupération récursive de tous les index.html
 function getFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
 
-  files.forEach((file) => {
+  for (const file of files) {
     const filePath = path.join(dir, file);
     const isDirectory = fs.statSync(filePath).isDirectory();
 
     if (isDirectory) {
-      // Exclure les dossiers dont le nom correspond à EXCLUDED_FOLDER
-      if (path.basename(filePath) !== EXCLUDED_FOLDER) {
+      const folderName = path.basename(filePath);
+      if (!EXCLUDED_FOLDERS.includes(folderName)) {
         getFiles(filePath, fileList);
       }
-    } else if (file === "index.html") {
-      const relativePath = filePath.replace(pagesDir, "").replace(/\\/g, "/");
-
-      // Ne pas inclure les fichiers dont le chemin commence par /modals
-      if (!relativePath.startsWith(`/${EXCLUDED_FOLDER}/`)) {
-        fileList.push(relativePath);
-      }
+      continue;
     }
-  });
+
+    if (file !== "index.html") continue;
+
+    const relativePath = filePath.replace(pagesDir, "").replace(/\\/g, "/");
+
+    if (is404(relativePath)) continue;
+    if (EXCLUDED_FOLDERS.some((f) => relativePath.startsWith(`/${f}/`)))
+      continue;
+
+    fileList.push(relativePath);
+  }
 
   return fileList;
 }
 
-// 📄 Récupérer tous les fichiers index.html valides
 const files = getFiles(pagesDir);
 
-// 🌐 Détection des langues
-const rootStructure = new Set();
-const languages = new Set();
-
-files.forEach((file) => {
-  const parts = file.split("/").filter(Boolean);
-  if (parts.length === 1) {
-    rootStructure.add(parts[0]);
-  } else if (!rootStructure.has(parts[0])) {
-    languages.add(parts[0]);
-  }
-});
-
-// 🔗 Construction des URLs avec gestion des priorités
+// ✅ Génération des URLs avec règles SEO propres
 const urlSet = new Set();
 const urls = [];
 
@@ -60,37 +55,60 @@ files.forEach((file) => {
   const route = file.replace("/index.html", "");
   const fullUrl = `${baseUrl}${route}`;
 
-  if (!urlSet.has(fullUrl)) {
-    urlSet.add(fullUrl);
+  if (urlSet.has(fullUrl)) return;
+  urlSet.add(fullUrl);
 
-    const parts = route.split("/").filter(Boolean);
-    const isLang = parts.length > 0 && languages.has(parts[0]);
+  let priority = 0.6;
+  let changefreq = "monthly";
 
-    let priority;
-    if (parts.length === 0 || (parts.length === 1 && isLang)) {
-      priority = 1.0;
-    } else if (parts.length === 1 || (parts.length === 2 && isLang)) {
-      priority = 0.9;
-    } else {
-      priority = 0.8;
-    }
-
-    urls.push({
-      loc: fullUrl,
-      changefreq: "weekly",
-      priority,
-      lastmod: new Date().toISOString(),
-    });
+  // ✅ HOME
+  if (route === "") {
+    priority = 1.0;
+    changefreq = "weekly";
   }
+
+  // ✅ PAGES BUSINESS PRINCIPALES
+  else if (
+    route === "/expertises" ||
+    route === "/colocations" ||
+    route === "/optimhome" ||
+    route === "/visites-virtuelles"
+  ) {
+    priority = 0.8;
+    changefreq = "monthly";
+  }
+
+  // ✅ PAGES INFORMATIVES
+  else if (
+    route === "/about" ||
+    route === "/contact" ||
+    route === "/honoraires"
+  ) {
+    priority = 0.5;
+    changefreq = "yearly";
+  }
+
+  // ✅ LÉGAL
+  else if (route === "/mentions-legales") {
+    priority = 0.2;
+    changefreq = "yearly";
+  }
+
+  urls.push({
+    loc: fullUrl,
+    changefreq,
+    priority,
+    lastmod: today,
+  });
 });
 
-// 📊 Tri des URLs par priorité décroissante puis par ordre alphabétique
+// ✅ Tri SEO propre
 urls.sort((a, b) => {
   if (b.priority !== a.priority) return b.priority - a.priority;
   return a.loc.localeCompare(b.loc);
 });
 
-// 🧾 Génération du sitemap XML
+// ✅ Génération XML conforme Google
 const sitemap = xml(
   [
     {
@@ -110,7 +128,7 @@ const sitemap = xml(
   { declaration: true }
 );
 
-// 💾 Écriture dans le fichier sitemap.xml
+// ✅ Sauvegarde
 fs.writeFileSync("sitemap.xml", sitemap);
 
-console.log("✅ Sitemap généré avec succès, dossier 'modals' exclu !");
+console.log("✅ Sitemap SEO PRO généré correctement !");
