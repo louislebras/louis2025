@@ -4,7 +4,7 @@ main {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 }
 main h1,
 main p {
