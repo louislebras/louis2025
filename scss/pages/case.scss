@@ -53,7 +53,7 @@ header .active-link * {
 @media (max-width: 850px) {
   .content-case-container {
     width: 100%;
-    padding-top: 50px;
+    padding-top: 0px;
   }
 }
 
@@ -126,11 +126,17 @@ header .active-link * {
   }
 }
 
+.mobile-header {
+  margin-top: 48vh;
+  width: 100%;
+  padding: 10px;
+}
+
 @media (max-width: 850px) {
   .visual-case-container {
     left: 0;
     width: 100%;
-    margin-top: 48vh;
+    margin-top: 2vh;
     position: relative;
     height: auto;
     .main-visual-content {
