@@ -1,0 +1,18 @@
+[
+  {
+    "group": "default",
+    "components": [
+      "header",
+      "pageContent"
+    ],
+    "pages": [
+      "/principleos",
+      "/information",
+      "/index",
+      "/donzelli",
+      "/dieter",
+      "/archivesbottega",
+      "/404"
+    ]
+  }
+]
