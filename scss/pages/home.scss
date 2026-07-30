@@ -45,7 +45,7 @@ body:has(.home-page) > header {
 }
 
 .home-introduction {
-  margin-top: 8px;
+  margin-top: 3px;
   max-width: 375px;
 }
 
@@ -92,7 +92,7 @@ body:has(.home-page) > header {
 
 .part-row {
   display: grid;
-  grid-template-columns: 120px 44px 1fr 50px;
+  grid-template-columns: 145px 44px 1fr 50px;
   line-height: 17px;
 }
 
@@ -124,6 +124,10 @@ body:has(.home-page) > header {
 }
 
 .part-label {
+  white-space: nowrap;
+}
+
+.part-name {
   white-space: nowrap;
 }
 
@@ -224,7 +228,9 @@ body:has(.home-page) > header {
 }
 
 .writing-row + .writing-row {
-  margin-top: 0;
+  border-top: 1px solid #333333;
+  margin-top: 9px;
+  padding-top: 10px;
 }
 
 .writing-row time {
@@ -304,7 +310,7 @@ body:has(.home-page) > header {
   }
 
   .part-row {
-    grid-template-columns: 120px 44px 1fr;
+    grid-template-columns: 145px 30px 1fr;
   }
 
   .writing-tabs {
