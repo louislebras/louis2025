@@ -235,6 +235,11 @@ body:has(.home-page) > header {
 
 .writing-row time {
   color: #666;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  letter-spacing: inherit;
+  line-height: inherit;
   text-align: left;
 }
 
