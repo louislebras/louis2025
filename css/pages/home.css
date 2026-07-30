@@ -287,18 +287,18 @@ body:has(.home-page) > header {
 }
 @media (max-width: 420px) {
   .home-page {
-    font-size: 13.5px;
+    font-size: 14.5px;
   }
   .home-introduction p,
   .part-row,
   .part-content,
   .writing-row {
-    font-size: 13.5px;
-    line-height: 18.5px;
+    font-size: 14.5px;
+    line-height: 19.5px;
   }
   .part-plus {
-    height: 18.5px;
-    line-height: 18.5px;
+    height: 19.5px;
+    line-height: 19.5px;
   }
   .part-label {
     display: none;
@@ -307,8 +307,8 @@ body:has(.home-page) > header {
     grid-template-columns: 145px 30px 1fr;
   }
   .writing-tabs {
-    font-size: 19.5px;
-    line-height: 24px;
+    font-size: 20.5px;
+    line-height: 25px;
   }
   .desktop-break {
     display: none;

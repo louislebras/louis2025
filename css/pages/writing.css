@@ -97,22 +97,22 @@ body:has(.writing-page) > header {
 @media (max-width: 700px) {
   .writing-page {
     max-width: 100%;
-    font-size: 13.5px;
+    font-size: 14.5px;
   }
   .writing-article {
     margin: 28px 0 80px;
   }
   .writing-article h1 {
-    font-size: 19.5px;
+    font-size: 20.5px;
   }
   .writing-copy p,
   .writing-copy blockquote {
-    font-size: 13.5px;
-    line-height: 18.5px;
+    font-size: 14.5px;
+    line-height: 19.5px;
   }
   .writing-copy h2 {
-    font-size: 15.5px;
-    line-height: 18.5px;
+    font-size: 16.5px;
+    line-height: 19.5px;
   }
 }
 @media (min-width: 851px) {
