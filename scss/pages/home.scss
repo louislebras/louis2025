@@ -299,6 +299,14 @@ body:has(.home-page) > header {
     line-height: 18.5px;
   }
 
+  .part-label {
+    display: none;
+  }
+
+  .part-row {
+    grid-template-columns: 120px 44px 1fr;
+  }
+
   .writing-tabs {
     font-size: 19.5px;
     line-height: 24px;
