@@ -1,5 +1,5 @@
 body:has(.writing-page) {
-  background: #181818;
+  background: #0c0c0c;
   color: #f5f5f5;
 }
 
@@ -97,7 +97,7 @@ body:has(.writing-page) > header {
 @media (max-width: 700px) {
   .writing-page {
     max-width: 100%;
-    font-size: 12px;
+    font-size: 13.5px;
   }
 
   .writing-article {
@@ -105,13 +105,18 @@ body:has(.writing-page) > header {
   }
 
   .writing-article h1 {
-    font-size: 18px;
+    font-size: 19.5px;
   }
 
   .writing-copy p,
   .writing-copy blockquote {
-    font-size: 12px;
-    line-height: 17px;
+    font-size: 13.5px;
+    line-height: 18.5px;
+  }
+
+  .writing-copy h2 {
+    font-size: 15.5px;
+    line-height: 18.5px;
   }
 }
 

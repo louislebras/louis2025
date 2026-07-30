@@ -1,5 +1,5 @@
 body:has(.home-page) {
-  background: #181818;
+  background: #0c0c0c;
   color: #f5f5f5;
 }
 
@@ -275,6 +275,24 @@ body:has(.home-page) > header {
   }
 }
 @media (max-width: 420px) {
+  .home-page {
+    font-size: 13.5px;
+  }
+  .home-introduction p,
+  .part-row,
+  .part-content,
+  .writing-row {
+    font-size: 13.5px;
+    line-height: 18.5px;
+  }
+  .part-plus {
+    height: 18.5px;
+    line-height: 18.5px;
+  }
+  .writing-tabs {
+    font-size: 19.5px;
+    line-height: 24px;
+  }
   .desktop-break {
     display: none;
   }
@@ -286,5 +304,11 @@ body:has(.home-page) > header {
   }
   .home-belief {
     width: 100%;
+  }
+  .writing-row {
+    grid-template-columns: minmax(0, 1fr) 74px 40px;
+  }
+  .writing-row > * {
+    min-width: 0;
   }
 }
