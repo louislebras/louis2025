@@ -28,7 +28,7 @@ button {
 }
 
 .text-color-secondary {
-  color: #6f6f6f;
+  color: #b0b0b0;
   transition: 0.3s ease;
 }
 .text-color-secondary:hover {
@@ -80,7 +80,7 @@ a {
 }
 
 .grey {
-  color: #6f6f6f !important;
+  color: #b0b0b0 !important;
 }
 
 .semi-grey {
@@ -96,7 +96,7 @@ a {
   transition: 0.3s ease;
 }
 .grey-hover:hover {
-  color: #6f6f6f;
+  color: #b0b0b0;
 }
 
 .link-hover {
