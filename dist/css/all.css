@@ -1,38 +1,38 @@
 @font-face {
-  font-family: "Inter";
-  src: url("../../assets/fonts/inter-semibold.woff") format("woff");
-  src: url("../../assets/fonts/inter-semibold.woff2") format("woff2");
+  font-family: "louis-font";
+  src: url("../../assets/fonts/louis-font.woff") format("woff");
+  src: url("../../assets/fonts/louis-font.woff2") format("woff2");
   font-display: swap;
   font-style: normal;
-  font-weight: 700 !important;
+  font-weight: 400;
 }
 /* Pour tous les navigateurs */
 ::selection {
-  background: #1c1c1c;
-  color: white;
+  background: #ffb400;
+  color: #000000;
 }
 
 /* Firefox */
 ::-moz-selection {
-  background: #1c1c1c;
-  color: white;
+  background: #ffb400;
+  color: #000000;
 }
 
 .inter {
-  font-family: "Inter" !important;
+  font-family: "louis-font" !important;
   letter-spacing: -0.015em;
 }
 
 button {
-  color: #000;
+  color: #f5f5f5;
 }
 
 .text-color-secondary {
-  color: #7e7e7e;
+  color: #6f6f6f;
   transition: 0.3s ease;
 }
 .text-color-secondary:hover {
-  color: #000000;
+  color: #f5f5f5;
 }
 
 .uppercase {
@@ -75,12 +75,12 @@ button {
 
 a {
   text-decoration: none;
-  color: #000000;
+  color: #f5f5f5;
   outline: none !important;
 }
 
 .grey {
-  color: #7e7e7e !important;
+  color: #6f6f6f !important;
 }
 
 .semi-grey {
@@ -92,11 +92,11 @@ a {
 }
 
 .grey-hover {
-  color: #000000;
+  color: #f5f5f5;
   transition: 0.3s ease;
 }
 .grey-hover:hover {
-  color: #7e7e7e;
+  color: #6f6f6f;
 }
 
 .link-hover {
@@ -534,9 +534,9 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #f3f3f3;
-  color: #000000;
-  font-family: "Inter";
+  background-color: #181818;
+  color: #f5f5f5;
+  font-family: "louis-font";
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

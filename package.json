@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "dev": "node server/dev.mjs",
     "generate-sitemap": "node utils/generate-sitemap.mjs",
     "build:styles": "mkdir -p ./css && sass ./scss:./css --no-source-map --style=expanded",
     "copy:styles": "mkdir -p ./dist/css && cp -r ./css ./dist",

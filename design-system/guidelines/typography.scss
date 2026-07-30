@@ -1,31 +1,31 @@
 @font-face {
-  font-family: "Inter";
-  src: url("../../assets/fonts/inter-semibold.woff") format("woff");
-  src: url("../../assets/fonts/inter-semibold.woff2") format("woff2");
+  font-family: "louis-font";
+  src: url("../../assets/fonts/louis-font.woff") format("woff");
+  src: url("../../assets/fonts/louis-font.woff2") format("woff2");
   font-display: swap;
   font-style: normal;
-  font-weight: 700 !important;
+  font-weight: 400;
 }
 
 /* Pour tous les navigateurs */
 ::selection {
-  background: #1c1c1c; // couleur de fond du surlignage
-  color: white; // couleur du texte sélectionné
+  background: #ffb400;
+  color: #000000;
 }
 
 /* Firefox */
 ::-moz-selection {
-  background: #1c1c1c;
-  color: white;
+  background: #ffb400;
+  color: #000000;
 }
 
 .inter {
-  font-family: "Inter" !important;
+  font-family: "louis-font" !important;
   letter-spacing: -0.015em;
 }
 
 button {
-  color: #000;
+  color: $text-primary;
 }
 
 // Text Colors

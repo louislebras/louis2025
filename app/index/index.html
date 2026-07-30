@@ -1,18 +1,74 @@
 <link rel="stylesheet" href="[ROOT]/css/pages/home.css">
 
-
-
-<main>
-    <div class="visualizer-home">
-        <img src="../../assets/media/home/Frame 7.png" alt="Frame 7">
-        <img src="../../assets/media/home/Frame 9.png" alt="Frame 9">
-        <img src="../../assets/media/home/Frame 8.png" alt="Frame 8">
-        <img src="../../assets/media/home/Frame 19.png" alt="Frame 19">
-        <img src="../../assets/media/home/Frame 11.png" alt="Frame 11">
-        <img src="../../assets/media/home/Frame 20.png" alt="Frame 20">
-        <img src="../../assets/media/dieter/dieter-1.png" alt="Dieter 1">
+<main class="home-page">
+    <div class="home-topbar" aria-label="Primary navigation">
+        <a href="[ROOT]/" class="home-name">Louis Le Bras</a>
+        <a href="[ROOT]/information" class="home-about">about myself</a>
     </div>
+
+    <section class="home-introduction" aria-labelledby="intro-title">
+        <h1 id="intro-title" class="sr-only">Louis Le Bras</h1>
+        <p>founder + builder of <a href="https://santinel.ai" target="_blank" rel="noreferrer">santinel.ai</a>, an AI company building the personal infrastructure, tools and systems for the AI and agentic era. inside santinel, we develop several products and things that give leverage to individuals.</p>
+    </section>
+
+    <section class="santinel-parts" aria-labelledby="parts-title">
+        <ul>
+            <li class="part-item">
+                <div class="part-row">
+                    <span class="part-name"><span class="part-kicker">santinel (1) /</span> network</span>
+                    <button class="part-plus" type="button" aria-expanded="false" aria-controls="part-network"><img src="[ROOT]/assets/chevron.svg" alt="Chevron"></button>
+                    <span class="part-label">Know who matters.</span>
+                    <a href="https://santinel.ai" target="_blank" rel="noreferrer">[live]</a>
+                </div>
+                <div class="part-content" id="part-network" hidden>An intel agent to stonk your network at scale with AI to open invisible doors and the right people for you. The social engineering that takes seconds instead of years.</div>
+            </li>
+            <li class="part-item">
+                <div class="part-row">
+                    <span class="part-name"><span class="part-kicker">santinel (2) /</span> memory</span>
+                    <button class="part-plus" type="button" aria-expanded="false" aria-controls="part-memory"><img src="[ROOT]/assets/chevron.svg" alt="Chevron"></button>
+                    <span class="part-label">Never lose context + vision.</span>
+                    <span class="coming">[coming]</span>
+                </div>
+                <div class="part-content" id="part-memory" hidden>A portable, model-agnostic memory that preserves your context over time and connects it to any AI model or application you choose. The more it learns about you, the more precise, personal, and powerful every AI becomes.</div>
+            </li>
+            <li class="part-item">
+                <div class="part-row">
+                    <span class="part-name"><span class="part-kicker">santinel (3) /</span> agents</span>
+                    <button class="part-plus" type="button" aria-expanded="false" aria-controls="part-agents"><img src="[ROOT]/assets/chevron.svg" alt="Chevron"></button>
+                    <span class="part-label">Execute at scale.</span>
+                    <span class="coming">[coming]</span>
+                </div>
+                <div class="part-content" id="part-agents" hidden>A portable agent system to create and deploy your own agents that run on any model based on accuracy, cost, speed, privacy, and availability. More accurate, continuous, and efficient work at a lower cost per task.</div>
+            </li>
+        </ul>
+    </section>
+
+    <section class="home-belief" hidden>
+        <p>I believe AI is the last machine humans will build. It is only a<br class="desktop-break"> base and a step toward our next stage as a civilization: space<br class="desktop-break"> conquest, health, energy, work and more. I serve as entering a<br class="desktop-break"> <strong>cybermedieval era</strong>: big companies will be few, there will be as many<br class="desktop-break"> businesses as there are people, and everyone will be able to<br class="desktop-break"> develop their own singularity and build their own agency through<br class="desktop-break"> AI, no matter what they do.</p>
+        <a class="account-link" href="https://x.com/louislebras" target="_blank" rel="noreferrer">more on my X account</a>
+    </section>
+
+    <section class="home-writings" aria-labelledby="writings-title">
+        <nav class="writing-tabs" aria-label="Writing categories">
+            <button id="writings-title" class="active" type="button" role="tab" aria-selected="true" aria-controls="panel-writings" data-tab="writings">writings</button>
+            <button class="muted" type="button" role="tab" aria-selected="false" aria-controls="panel-shop" data-tab="shop">shop</button>
+            <button class="muted" type="button" role="tab" aria-selected="false" aria-controls="panel-archives" data-tab="archives">archives</button>
+        </nav>
+        <div class="writing-panel is-visible" id="panel-writings" role="tabpanel" data-panel="writings">
+            <article class="writing-row">
+                <span>we are entering a cybermedieval era</span>
+                <time datetime="2026-07-29">07.29.2026</time>
+                <a href="/writings/we-are-entering-a-cybermedieval-era/">view</a>
+            </article>
+            <article class="writing-row">
+                <span>the rules you can play with</span>
+                <time datetime="2026-06-24">06.24.2026</time>
+                <a href="/writings/the-rules-you-can-play-with/">view</a>
+            </article>
+        </div>
+        <div class="writing-panel" id="panel-shop" role="tabpanel" data-panel="shop" hidden></div>
+        <div class="writing-panel" id="panel-archives" role="tabpanel" data-panel="archives" hidden></div>
+    </section>
 </main>
 
-
-<script src="/js/pages/home-visualizer.js"></script>
+<script src="/js/pages/home-tabs.js"></script>

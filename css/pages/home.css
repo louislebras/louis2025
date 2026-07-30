@@ -1,54 +1,290 @@
-@charset "UTF-8";
-html,
-body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+body:has(.home-page) {
+  background: #181818;
+  color: #f5f5f5;
 }
 
-main {
-  width: calc(70% + 10px);
-  margin-left: 30%;
-  height: 100vh;
-  overflow: hidden;
+body:has(.home-page) > header {
+  display: none;
+}
+
+.home-page {
+  --meta-column-offset: 310px;
+  --parts-offset: 35px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   position: relative;
-  top: -10px;
-  right: 0px;
-}
-
-@media (max-width: 850px) {
-  main {
-    width: 100%;
-    margin-left: -10px;
-    top: 0;
-    height: auto;
-  }
-}
-.visualizer-home {
-  height: 100vh;
-  width: 100%;
-  background-color: #ececec;
-}
-
-@media (max-width: 850px) {
-  .visualizer-home {
-    height: 48vh;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-  }
-}
-.visualizer-home > * {
-  /* Tous les enfants (img, video) */
-  position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Remplit le conteneur sans déformation */
-  display: none; /* Caché par défaut */
+  overflow: visible;
+  font-size: 12px;
+  letter-spacing: 0.02em;
 }
 
-.visualizer-home > .active {
-  display: block; /* Affiche le média actif */
+.home-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  line-height: 14px;
+}
+
+.home-name,
+.home-about,
+.home-page a {
+  color: #f5f5f5;
+}
+
+.home-about,
+.home-introduction a,
+.santinel-parts h2 a,
+.account-link,
+.writing-row a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.home-introduction {
+  margin-top: 8px;
+  max-width: 375px;
+}
+
+.home-introduction p,
+.home-belief p {
+  margin: 0;
+  line-height: 17px;
+}
+
+.home-introduction p {
+  color: #6f6f6f;
+}
+
+.home-introduction p a {
+  color: #f5f5f5;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.home-introduction p a::selection {
+  background: #ffb400;
+  color: #f5f5f5;
+}
+
+.home-introduction p a::-moz-selection {
+  background: #ffb400;
+  color: #f5f5f5;
+}
+
+.santinel-parts {
+  width: 100%;
+  margin: 22px 0 0;
+}
+
+.santinel-parts ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.santinel-parts li {
+  margin-bottom: 2px;
+}
+
+.part-row {
+  display: grid;
+  grid-template-columns: 120px 44px 1fr 50px;
+  line-height: 17px;
+}
+
+.part-plus {
+  background: transparent;
+  border: 0;
+  color: #f5f5f5;
+  cursor: pointer;
+  font: inherit;
+  align-items: center;
+  display: flex;
+  height: 17px;
+  padding: 0;
+  text-align: left;
+}
+
+.part-plus img {
+  display: block;
+  height: 8px;
+  /* width: 8px; */
+}
+
+.part-kicker {
+  color: #6f6f6f;
+}
+
+.part-row > :last-child {
+  text-align: right;
+}
+
+.part-label {
+  white-space: nowrap;
+}
+
+.part-content {
+  max-width: 330px;
+  font-size: 12px;
+  line-height: 17px;
+  margin-bottom: 50px;
+  padding: 0 0 0 0;
+}
+
+.coming,
+.muted {
+  color: #626262 !important;
+}
+
+.home-belief {
+  position: absolute;
+  top: 361px;
+  margin-top: 0;
+  margin-left: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.home-belief[hidden] {
+  display: none;
+}
+
+.home-belief p {
+  text-indent: 44px;
+}
+
+.home-belief strong {
+  font-weight: 700;
+}
+
+.account-link {
+  display: block;
+  width: 120px;
+  margin-top: 0;
+  margin-left: var(--meta-column-offset);
+  line-height: 17px;
+  text-align: left;
+}
+
+.home-writings {
+  position: relative;
+  top: auto;
+  width: 100%;
+  margin-top: 128px;
+}
+
+.writing-tabs {
+  display: flex;
+  gap: 17px;
+  align-items: baseline;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.writing-tabs button {
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.writing-tabs a {
+  letter-spacing: -0.025em;
+}
+
+.writing-tabs .active {
+  color: #f5f5f5;
+}
+
+.writing-list {
+  margin-top: 59px;
+}
+
+.writing-panel {
+  margin-top: 22px;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.writing-panel[hidden] {
+  display: none;
+}
+
+.writing-row {
+  display: grid;
+  grid-template-columns: calc(var(--meta-column-offset) - 10px) 74px 1fr;
+  column-gap: 10px;
+  align-items: baseline;
+  line-height: 17px;
+}
+
+.writing-row + .writing-row {
+  margin-top: 0;
+}
+
+.writing-row time {
+  color: #666;
+  text-align: left;
+}
+
+.writing-row a {
+  text-align: right;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 851px) {
+  .home-page {
+    max-width: 400px;
+    width: 400px;
+    margin: 10px auto 0;
+  }
+  .santinel-parts {
+    margin-left: 0;
+    width: 400px;
+  }
+  .home-belief {
+    width: 400px;
+  }
+  .account-link {
+    width: 300px;
+  }
+  .home-writings {
+    margin-top: 128px;
+  }
+  .writing-panel {
+    margin-top: 20px;
+  }
+  .writing-row {
+    grid-template-columns: 263px 74px 1fr;
+  }
+}
+@media (max-width: 420px) {
+  .desktop-break {
+    display: none;
+  }
+  .home-introduction {
+    max-width: 100%;
+  }
+  .santinel-parts {
+    width: 100%;
+  }
+  .home-belief {
+    width: 100%;
+  }
 }

@@ -1,0 +1,118 @@
+body:has(.writing-page) {
+  background: #181818;
+  color: #f5f5f5;
+}
+
+body:has(.writing-page) > header {
+  display: none;
+}
+
+.writing-page {
+  max-width: 400px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.writing-back {
+  color: #f5f5f5 !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.writing-back-chevron {
+  display: inline-block;
+  height: 8px;
+  transform: rotate(180deg);
+  margin-right: 5px;
+}
+
+.writing-article {
+  margin: 28px 0 80px;
+}
+
+.writing-article-header {
+  margin-bottom: 28px;
+}
+
+.writing-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #6f6f6f;
+  margin-top: 8px;
+}
+
+.writing-article h1 {
+  font-size: 18px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+.writing-copy p,
+.writing-copy blockquote {
+  font-size: 12px;
+  line-height: 17px;
+  margin: 0 0 24px;
+}
+
+.writing-copy h2 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  margin: 36px 0 16px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.writing-copy h2 + p {
+  text-indent: 30px;
+}
+
+.writing-article h1,
+.writing-article-header,
+.writing-article {
+  position: static;
+}
+
+.writing-article-header {
+  margin-bottom: 72px;
+}
+
+.writing-copy blockquote {
+  border-left: 1px solid #ffb400;
+  color: #f5f5f5;
+  margin-left: 0;
+  padding-left: 18px;
+}
+
+.writing-accent {
+  color: #ffb400;
+}
+
+@media (max-width: 700px) {
+  .writing-page {
+    max-width: 100%;
+    font-size: 12px;
+  }
+  .writing-article {
+    margin: 28px 0 80px;
+  }
+  .writing-article h1 {
+    font-size: 18px;
+  }
+  .writing-copy p,
+  .writing-copy blockquote {
+    font-size: 12px;
+    line-height: 17px;
+  }
+}
+@media (min-width: 851px) {
+  .writing-page {
+    margin: 10px auto 0;
+  }
+}

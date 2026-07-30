@@ -1,10 +1,11 @@
 // 🎨 Palette base
 // Neutral Colors
-$color-neutral-100: #f3f3f3;
-$color-neutral-200: #ececec;
-$color-neutral-300: #e6e6e6;
-$color-neutral-700: #7e7e7e;
+$color-neutral-100: #181818;
+$color-neutral-200: #111111;
+$color-neutral-300: #242424;
+$color-neutral-700: #6f6f6f;
 $color-black: #000000;
+$color-white: #f5f5f5;
 
 // 🧩 Tokens d’usage
 
@@ -13,37 +14,37 @@ $background-secondary: $color-neutral-200;
 
 $border-color-primary: $color-neutral-300;
 
-$text-primary: $color-black;
+$text-primary: $color-white;
 $text-secondary: $color-neutral-700;
 
 @font-face {
-  font-family: "Inter";
-  src: url("../../assets/fonts/inter-semibold.woff") format("woff");
-  src: url("../../assets/fonts/inter-semibold.woff2") format("woff2");
+  font-family: "louis-font";
+  src: url("../../assets/fonts/louis-font.woff") format("woff");
+  src: url("../../assets/fonts/louis-font.woff2") format("woff2");
   font-display: swap;
   font-style: normal;
-  font-weight: 700 !important;
+  font-weight: 400;
 }
 
 /* Pour tous les navigateurs */
 ::selection {
-  background: #1c1c1c; // couleur de fond du surlignage
-  color: white; // couleur du texte sélectionné
+  background: #ffb400;
+  color: #000000;
 }
 
 /* Firefox */
 ::-moz-selection {
-  background: #1c1c1c;
-  color: white;
+  background: #ffb400;
+  color: #000000;
 }
 
 .inter {
-  font-family: "Inter" !important;
+  font-family: "louis-font" !important;
   letter-spacing: -0.015em;
 }
 
 button {
-  color: #000;
+  color: $text-primary;
 }
 
 // Text Colors
@@ -246,11 +247,12 @@ span {
 
 // 🎨 Palette base
 // Neutral Colors
-$color-neutral-100: #f3f3f3;
-$color-neutral-200: #ececec;
-$color-neutral-300: #e6e6e6;
-$color-neutral-700: #7e7e7e;
+$color-neutral-100: #181818;
+$color-neutral-200: #111111;
+$color-neutral-300: #242424;
+$color-neutral-700: #6f6f6f;
 $color-black: #000000;
+$color-white: #f5f5f5;
 
 // 🧩 Tokens d’usage
 
@@ -259,7 +261,7 @@ $background-secondary: $color-neutral-200;
 
 $border-color-primary: $color-neutral-300;
 
-$text-primary: $color-black;
+$text-primary: $color-white;
 $text-secondary: $color-neutral-700;
 
 .trust-data-line-component {
@@ -606,7 +608,7 @@ body {
   flex-direction: column;
   background-color: $background-primary;
   color: $text-primary;
-  font-family: "Inter";
+  font-family: "louis-font";
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
