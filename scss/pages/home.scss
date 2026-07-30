@@ -91,8 +91,9 @@ body:has(.home-page) > header {
 }
 
 .part-row {
+  cursor: pointer;
   display: grid;
-  grid-template-columns: 145px 44px 1fr 50px;
+  grid-template-columns: 145px 44px 1fr;
   line-height: 17px;
 }
 
@@ -115,6 +116,10 @@ body:has(.home-page) > header {
   /* width: 8px; */
 }
 
+.part-plus.is-open img {
+  transform: rotate(90deg);
+}
+
 .part-kicker {
   color: #b0b0b0;
 }
@@ -124,7 +129,7 @@ body:has(.home-page) > header {
 }
 
 .part-label {
-  white-space: nowrap;
+  display: none;
 }
 
 .part-name {
