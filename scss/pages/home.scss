@@ -35,6 +35,16 @@ body:has(.home-page) > header {
   color: #f5f5f5;
 }
 
+.home-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.home-actions a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .home-about,
 .home-introduction a,
 .santinel-parts h2 a,
